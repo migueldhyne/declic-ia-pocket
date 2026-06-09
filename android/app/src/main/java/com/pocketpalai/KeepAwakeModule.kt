@@ -5,7 +5,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.annotations.ReactModule
 import com.pocketpalai.specs.NativeKeepAwakeSpec
 
-@ReactModule(name = NativeKeepAwakeSpec.NAME)
+@ReactModule(name = "KeepAwakeModule")
 class KeepAwakeModule(reactContext: ReactApplicationContext) :
     NativeKeepAwakeSpec(reactContext) {
 
@@ -23,4 +23,3 @@ class KeepAwakeModule(reactContext: ReactApplicationContext) :
     }
   }
 }
-

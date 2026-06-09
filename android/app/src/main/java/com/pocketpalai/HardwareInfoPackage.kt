@@ -5,11 +5,10 @@ import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
-import com.pocketpalai.specs.NativeHardwareInfoSpec
 
 class HardwareInfoPackage : TurboReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
-    return if (name == NativeHardwareInfoSpec.NAME) {
+    return if (name == "HardwareInfo") {
       HardwareInfoModule(reactContext)
     } else {
       null
@@ -19,9 +18,9 @@ class HardwareInfoPackage : TurboReactPackage() {
   override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
     return ReactModuleInfoProvider {
       mapOf(
-        NativeHardwareInfoSpec.NAME to ReactModuleInfo(
-          NativeHardwareInfoSpec.NAME,
-          NativeHardwareInfoSpec.NAME,
+        "HardwareInfo" to ReactModuleInfo(
+          "HardwareInfo",
+          "HardwareInfo",
           false, // canOverrideExistingModule
           false, // needsEagerInit
           true,  // hasConstants
@@ -32,4 +31,3 @@ class HardwareInfoPackage : TurboReactPackage() {
     }
   }
 }
-

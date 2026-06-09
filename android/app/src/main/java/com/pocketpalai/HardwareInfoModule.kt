@@ -17,7 +17,7 @@ import android.content.Context
 import org.json.JSONArray
 import org.json.JSONObject
 
-@ReactModule(name = NativeHardwareInfoSpec.NAME)
+@ReactModule(name = "HardwareInfo")
 class HardwareInfoModule(reactContext: ReactApplicationContext) :
     NativeHardwareInfoSpec(reactContext) {
 
@@ -27,7 +27,7 @@ class HardwareInfoModule(reactContext: ReactApplicationContext) :
   // needed.
   private external fun nativePurgeAll(): Boolean
 
-  override fun getName(): String = NativeHardwareInfoSpec.NAME
+  override fun getName(): String = "HardwareInfo"
 
   override fun getChipset(promise: Promise) {
     try {

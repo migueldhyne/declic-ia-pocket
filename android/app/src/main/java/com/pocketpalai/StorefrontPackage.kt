@@ -5,11 +5,10 @@ import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
-import com.pocketpalai.specs.NativeStorefrontSpec
 
 class StorefrontPackage : TurboReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
-    return if (name == NativeStorefrontSpec.NAME) {
+    return if (name == "StorefrontModule") {
       StorefrontModule(reactContext)
     } else {
       null
@@ -19,9 +18,9 @@ class StorefrontPackage : TurboReactPackage() {
   override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
     return ReactModuleInfoProvider {
       mapOf(
-        NativeStorefrontSpec.NAME to ReactModuleInfo(
-          NativeStorefrontSpec.NAME,
-          NativeStorefrontSpec.NAME,
+        "StorefrontModule" to ReactModuleInfo(
+          "StorefrontModule",
+          "StorefrontModule",
           false, // canOverrideExistingModule
           false, // needsEagerInit
           false, // hasConstants

@@ -5,11 +5,11 @@ import com.facebook.react.module.annotations.ReactModule
 import com.pocketpalai.specs.NativeStorefrontSpec
 import java.util.Locale
 
-@ReactModule(name = NativeStorefrontSpec.NAME)
+@ReactModule(name = "StorefrontModule")
 class StorefrontModule(reactContext: ReactApplicationContext) :
     NativeStorefrontSpec(reactContext) {
 
-  override fun getName(): String = NativeStorefrontSpec.NAME
+  override fun getName(): String = "StorefrontModule"
 
   override fun getCountryCode(promise: Promise) {
     try {
