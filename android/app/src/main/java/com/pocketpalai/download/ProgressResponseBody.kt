@@ -1,4 +1,4 @@
-package com.pocketpal.download
+package com.pocketpalai.download
 
 import okhttp3.MediaType
 import okhttp3.ResponseBody
