@@ -1,4 +1,4 @@
-package com.pocketpal.download
+package com.pocketpalai.download
 
 import com.facebook.react.TurboReactPackage
 import com.facebook.react.bridge.NativeModule
