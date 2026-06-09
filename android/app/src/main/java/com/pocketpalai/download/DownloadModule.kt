@@ -13,7 +13,7 @@ import java.io.File
 import java.util.*
 import androidx.concurrent.futures.await
 
-@ReactModule(name = NativeDownloadModuleSpec.NAME)
+@ReactModule(name = "DownloadModule")
 class DownloadModule(reactContext: ReactApplicationContext) : NativeDownloadModuleSpec(reactContext) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private val downloadDao = DownloadDatabase.getInstance(reactContext).downloadDao()

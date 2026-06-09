@@ -5,11 +5,10 @@ import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
-import com.pocketpalai.specs.NativeDownloadModuleSpec
 
 class DownloadPackage : TurboReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
-    return if (name == NativeDownloadModuleSpec.NAME) {
+    return if (name == "DownloadModule") {
       DownloadModule(reactContext)
     } else {
       null
@@ -19,9 +18,9 @@ class DownloadPackage : TurboReactPackage() {
   override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
     return ReactModuleInfoProvider {
       mapOf(
-        NativeDownloadModuleSpec.NAME to ReactModuleInfo(
-          NativeDownloadModuleSpec.NAME,
-          NativeDownloadModuleSpec.NAME,
+        "DownloadModule" to ReactModuleInfo(
+          "DownloadModule",
+          "DownloadModule",
           false, // canOverrideExistingModule
           false, // needsEagerInit
           false, // hasConstants
