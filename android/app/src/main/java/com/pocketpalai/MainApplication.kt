@@ -1,4 +1,5 @@
 package com.pocketpal
+import net.generationdeclic.declicia.BuildConfig
 
 import android.app.Application
 import android.system.Os
