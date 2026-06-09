@@ -1,9 +1,8 @@
-package com.pocketpal.download
+package com.pocketpalai.download
 import net.generationdeclic.declicia.BuildConfig
 
 import android.content.Context
 import android.util.Log
-import com.pocketpal.BuildConfig
 import androidx.work.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
