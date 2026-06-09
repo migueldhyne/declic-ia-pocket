@@ -13,10 +13,10 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.soloader.OpenSourceMergedSoMapping
 import com.facebook.soloader.SoLoader
-import com.pocketpal.KeepAwakePackage
-import com.pocketpal.HardwareInfoPackage
-import com.pocketpal.StorefrontPackage
-import com.pocketpal.download.DownloadPackage
+import com.pocketpalai.KeepAwakePackage
+import com.pocketpalai.HardwareInfoPackage
+import com.pocketpalai.StorefrontPackage
+import com.pocketpalai.download.DownloadPackage
 
 class MainApplication : Application(), ReactApplication {
 
