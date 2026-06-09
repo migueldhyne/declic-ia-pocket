@@ -6,7 +6,7 @@ import androidx.work.*
 import com.facebook.react.bridge.*
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.modules.core.DeviceEventManagerModule
-import com.pocketpal.specs.NativeDownloadModuleSpec
+import com.pocketpalai.specs.NativeDownloadModuleSpec
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import java.io.File
