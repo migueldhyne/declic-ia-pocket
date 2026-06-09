@@ -1,4 +1,4 @@
-package com.pocketpal.download
+package com.pocketpalai.download
 
 import android.util.Log
 import androidx.lifecycle.Observer
