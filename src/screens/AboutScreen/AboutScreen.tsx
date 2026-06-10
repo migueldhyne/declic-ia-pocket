@@ -50,7 +50,6 @@ export const AboutScreen: React.FC = () => {
   const [featureRequests, setFeatureRequests] = useState('');
   const [generalFeedback, setGeneralFeedback] = useState('');
   const [usageFrequency, setUsageFrequency] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   React.useEffect(() => {
     const version = DeviceInfo.getVersion();
@@ -70,7 +69,7 @@ export const AboutScreen: React.FC = () => {
     );
   };
 
-  const handleSubmit = async () => {
+const handleSubmit = async () => {
   if (!useCase && !featureRequests && !generalFeedback) {
     Alert.alert(l10n.feedback.validation.required);
     return;
@@ -81,31 +80,11 @@ export const AboutScreen: React.FC = () => {
   );
   Linking.openURL(`mailto:hello@generationdeclic.net?subject=${subject}&body=${body}`);
   setShowFeedback(false);
+  setUseCase('');
+  setFeatureRequests('');
+  setGeneralFeedback('');
+  setUsageFrequency('');
 };
-
-    setIsSubmitting(true);
-    try {
-      await submitFeedback({
-        useCase,
-        featureRequests,
-        generalFeedback,
-        usageFrequency,
-      });
-      Alert.alert('Success', l10n.feedback.success);
-      setShowFeedback(false);
-      // Clear form
-      setUseCase('');
-      setFeatureRequests('');
-      setGeneralFeedback('');
-      setUsageFrequency('');
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : l10n.feedback.error.general;
-      Alert.alert('Error', errorMessage);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['bottom']}>
