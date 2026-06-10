@@ -86,12 +86,10 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
 
     const navigation = useNavigation<ChatScreenNavigationProp>();
 
-    const [snackbarVisible, setSnackbarVisible] = useState(false); // Snackbar visibility
+    const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [integrityError, setIntegrityError] = useState<string | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
 
-    // Resolve projection model for memory check (same logic as ModelStore.checkMemoryAndConfirm)
-    // Resolve projection model for memory check (same logic as ModelStore.checkMemoryAndConfirm)
     const projectionModelForCheck = useMemo(
       () => {
         if (
@@ -125,15 +123,13 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
     const isHfModel = model.origin === ModelOrigin.HF;
     const isRemoteModel = model.origin === ModelOrigin.REMOTE;
 
-    // Check projection model status for downloaded vision models
     const projectionModelStatus = modelStore.getProjectionModelStatus(model);
     const hasProjectionModelWarning =
       isDownloaded &&
       model.supportsMultimodal &&
-      modelStore.getModelVisionPreference(model) && // Only show warning when vision is enabled
+      modelStore.getModelVisionPreference(model) &&
       projectionModelStatus.state === 'missing';
 
-    // Check integrity when model is downloaded (skip remote models — no local file)
     useEffect(() => {
       if (isDownloaded && !isRemoteModel) {
         checkModelFileIntegrity(model).then(({errorMessage}) => {
@@ -146,12 +142,10 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
 
     const handleDelete = useCallback(() => {
       if (model.isDownloaded) {
-        // Special handling for projection models
         if (model.modelType === ModelType.PROJECTION) {
           const canDeleteResult = modelStore.canDeleteProjectionModel(model.id);
 
           if (!canDeleteResult.canDelete) {
-            // Show error dialog with specific reason
             let message =
               canDeleteResult.reason ||
               l10n.models.multimodal.cannotDeleteTitle;
@@ -176,7 +170,6 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
             return;
           }
 
-          // Show projection-specific confirmation dialog
           Alert.alert(
             l10n.models.multimodal.deleteProjectionTitle,
             l10n.models.multimodal.deleteProjectionMessage,
@@ -203,7 +196,6 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
             ],
           );
         } else {
-          // Standard model deletion
           Alert.alert(
             l10n.models.modelCard.alerts.deleteTitle,
             l10n.models.modelCard.alerts.deleteMessage,
@@ -251,10 +243,8 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
 
     const handleProjectionWarningPress = useCallback(() => {
       if (model.defaultProjectionModel) {
-        // Try to download the missing projection model
         modelStore.checkSpaceAndDownload(model.defaultProjectionModel);
       }
-      // Note: If no default projection model, user can manually select one in the vision controls
     }, [model.defaultProjectionModel]);
 
     const handleVisionToggle = useCallback(
@@ -263,7 +253,6 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
           await modelStore.setModelVisionEnabled(model.id, enabled);
         } catch (error) {
           console.error('Failed to toggle vision setting:', error);
-          // The error is already handled in setModelVisionEnabled (vision state is reverted)
         }
       },
       [model.id],
@@ -276,7 +265,6 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
       [model.id],
     );
 
-    // Helper function to get model type icon - updated sizes
     const getModelTypeIcon = () => {
       if (model.supportsMultimodal) {
         return (
@@ -287,7 +275,6 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
           />
         );
       }
-      // Default to chat icon for text models
       return (
         <ChatIcon
           width={16}
@@ -297,7 +284,6 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
       );
     };
 
-    // Helper function to get status dot
     const getStatusDot = () => {
       if (!isDownloaded) {
         return null;
@@ -316,7 +302,32 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
       );
     };
 
-    // Helper function to toggle expanded state with smooth LayoutAnimation
+    // Helper: couleur indicateur RAM
+    const getRamIndicatorStyle = (minRam: number) => {
+      if (minRam <= 3) {
+        return {
+          bg: theme.colors.btnReadyBg,
+          border: theme.colors.btnReadyBorder,
+          text: theme.colors.btnReadyText,
+          icon: '✅',
+        };
+      }
+      if (minRam <= 6) {
+        return {
+          bg: theme.colors.btnPrimaryBg,
+          border: theme.colors.btnPrimaryBorder,
+          text: theme.colors.btnPrimaryText,
+          icon: '⚠️',
+        };
+      }
+      return {
+        bg: theme.colors.errorContainer,
+        border: theme.colors.error,
+        text: theme.colors.error,
+        icon: '🔴',
+      };
+    };
+
     const toggleExpanded = useCallback(() => {
       LayoutAnimation.configureNext({
         duration: 300,
@@ -364,7 +375,6 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
     }, [model, l10n, isActiveModel]);
 
     const renderActionButtons = () => {
-      // Remote models: load/offload + delete
       if (isRemoteModel) {
         return (
           <View style={styles.actionButtonsRow}>
@@ -382,7 +392,6 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
       }
 
       if (isDownloading) {
-        // Downloading state - show cancel button
         return (
           <View style={styles.actionButtonsRow}>
             <Button
@@ -405,7 +414,6 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
       }
 
       if (!isDownloaded) {
-        // Not downloaded state
         return (
           <View style={styles.actionButtonsRow}>
             <Button
@@ -482,7 +490,6 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
         );
       }
 
-      // Downloaded state - soft blue styling
       return (
         <View style={styles.actionButtonsRow}>
           {renderModelLoadButton()}
@@ -607,7 +614,6 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
           testID={isActiveModel ? 'offload-button' : 'load-button'}
           accessibilityLabel={isActiveModel ? 'Offload model' : 'Load model'}
           icon={isActiveModel ? 'eject' : 'play-circle-outline'}
-          //mode="contained-tonal"
           onPress={handlePress}
           style={[styles.primaryActionButton, getButtonStyle()]}
           textColor={getTextColor()}>
@@ -665,6 +671,12 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
                       {getModelSizeString(model, isActiveModel, l10n)}
                     </Text>
                   </View>
+                )}
+                {/* Drapeau pays */}
+                {model.country && (
+                  <Text style={{fontSize: 14, marginRight: 4}}>
+                    {model.country}
+                  </Text>
                 )}
                 {getStatusDot()}
               </View>
@@ -765,7 +777,7 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
                   />
                 )}
 
-                {/* Description - matching updated React example */}
+                {/* Description */}
                 {model.capabilities && model.capabilities.length > 0 && (
                   <View style={styles.descriptionContainer}>
                     <Text style={styles.descriptionText}>
@@ -822,7 +834,7 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
                   </View>
                 )}
 
-                {/* Projection Models Management for multimodal models */}
+                {/* Projection Models Management */}
                 {model.supportsMultimodal &&
                   modelStore.getModelVisionPreference(model) && (
                     <View style={styles.projectionModelsContainer}>
@@ -835,7 +847,7 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
                     </View>
                   )}
 
-                {/* Technical Details Grid - 2x2 layout */}
+                {/* Technical Details Grid */}
                 <View style={styles.technicalDetailsGrid}>
                   {/* Parameters */}
                   {model.params > 0 && (
@@ -887,6 +899,44 @@ export const ModelCard: React.FC<ModelCardProps> = observer(
                       </Text>
                       <Text style={styles.technicalDetailValue}>
                         {model.author}
+                      </Text>
+                    </View>
+                  )}
+
+                  {/* RAM minimale — indicateur coloré */}
+                  {model.minRamGB && (() => {
+                    const ramStyle = getRamIndicatorStyle(model.minRamGB);
+                    return (
+                      <View style={[
+                        styles.technicalDetailCard,
+                        {
+                          backgroundColor: ramStyle.bg,
+                          borderWidth: 1,
+                          borderColor: ramStyle.border,
+                        },
+                      ]}>
+                        <Text style={styles.technicalDetailLabel}>
+                          RAM minimale
+                        </Text>
+                        <Text style={[
+                          styles.technicalDetailValue,
+                          {color: ramStyle.text},
+                        ]}>
+                          {ramStyle.icon} {model.minRamGB} GB
+                        </Text>
+                      </View>
+                    );
+                  })()}
+
+                  {/* Origine / Pays */}
+                  {model.country && (
+                    <View style={styles.technicalDetailCard}>
+                      <Text style={styles.technicalDetailLabel}>
+                        Origine
+                      </Text>
+                      <Text style={styles.technicalDetailValue}>
+                        {model.country}{' '}
+                        {model.type || ''}
                       </Text>
                     </View>
                   )}
