@@ -14,8 +14,6 @@ import {Text, Button, SegmentedButtons} from 'react-native-paper';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BuildInfo} from 'llama.rn';
 
-import {submitFeedback} from '../../api/feedback';
-
 import {
   CopyIcon,
   GithubIcon,
@@ -73,10 +71,17 @@ export const AboutScreen: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (!useCase && !featureRequests && !generalFeedback) {
-      Alert.alert(l10n.feedback.validation.required);
-      return;
-    }
+  if (!useCase && !featureRequests && !generalFeedback) {
+    Alert.alert(l10n.feedback.validation.required);
+    return;
+  }
+  const subject = encodeURIComponent('Feedback Déclic IA');
+  const body = encodeURIComponent(
+    `Cas d'usage: ${useCase}\n\nDemandes: ${featureRequests}\n\nFeedback général: ${generalFeedback}\n\nFréquence: ${usageFrequency}`
+  );
+  Linking.openURL(`mailto:hello@generationdeclic.net?subject=${subject}&body=${body}`);
+  setShowFeedback(false);
+};
 
     setIsSubmitting(true);
     try {
