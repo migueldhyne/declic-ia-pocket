@@ -1,14 +1,14 @@
 module.exports = {
   name: 'Déclic IA',
-  slug: 'declic-ia-pocket',
+  slug: 'declic-ia-app',
   version: '1.15.2',
-  owner: 'migueldhyne2',
+  owner: 'migueldhyne3',
   android: {
     package: 'net.generationdeclic.declicia'
   },
   extra: {
     eas: {
-      projectId: '939d9503-57ea-4029-b55f-e50392011f7a'
+      projectId: 'a9e3e710-1063-47fc-a0d4-ad8cda47a5dd'
     }
   }
 };
