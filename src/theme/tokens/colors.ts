@@ -1,33 +1,16 @@
 /**
  * Color tokens — light and dark bindings.
- *
- * Sources:
- *   - Light values: current `createBaseColors(AppTheme.Light)` +
- *     `createSemanticColors(_, false)` output from `src/utils/theme.ts`,
- *     preserved verbatim (no visual regression).
- *   - Dark values: extracted from canonical Figma `RZxDJea4t6jnBZrV4YBacF`,
- *     dark band `3011:*`. Where the canonical dark binding disagreed with
- *     the current dark Theme value at a key with visible consumers, the
- *     current dark value wins to avoid visual regression; the disagreement
- *     is tracked as a designer follow-up.
- *
- * `withOpacity` calls are deferred to a util (not inlined as literals) so
- * the output is byte-identical to today's runtime computation — this is
- * what guarantees no visual regression for the surfaceContainer* + border
- * + placeholder etc keys that currently derive via opacity math.
- *
- * NOTE on imports: this module imports from `../../utils/colorUtils` only,
- * which is a pure utility (no React, no Paper, no MobX). The purity
- * constraint for this module forbids React/Paper/MobX imports only.
+ * Customized for Déclic IA / GenerationDeclic
+ * Primary accent: orange #E8500A / teal #0A7E6E
  */
 import {withOpacity, stateLayerOpacity} from '../../utils/colorUtils';
 
 import {TokenColors} from './types';
 
-// Light base colors (verbatim from src/utils/theme.ts:111-147).
+// Light base colors
 const LIGHT_PRIMARY = '#333333';
-const LIGHT_SECONDARY = '#1E4DF6';
-const LIGHT_TERTIARY = '#7880FF';
+const LIGHT_SECONDARY = '#E8500A';      // orange GenerationDeclic
+const LIGHT_TERTIARY = '#0A7E6E';       // teal GenerationDeclic
 const LIGHT_ERROR = '#FF653F';
 const LIGHT_BACKGROUND = '#ffffff';
 const LIGHT_ON_BACKGROUND = '#111111';
@@ -43,11 +26,11 @@ export const lightColors: TokenColors = {
   onPrimaryContainer: '#2D2F33',
   secondary: LIGHT_SECONDARY,
   onSecondary: '#FFFFFF',
-  secondaryContainer: '#E0E0E0',
-  onSecondaryContainer: '#424242',
+  secondaryContainer: '#FDE8DF',
+  onSecondaryContainer: '#5C1E04',
   tertiary: LIGHT_TERTIARY,
   onTertiary: '#FFFFFF',
-  tertiaryContainer: '#F1F3FF',
+  tertiaryContainer: '#D6F0EC',
   onTertiaryContainer: '#013332',
   error: LIGHT_ERROR,
   onError: '#FFFFFF',
@@ -67,12 +50,12 @@ export const lightColors: TokenColors = {
   inverseSurface: '#858585',
   inverseOnSurface: LIGHT_INVERSE_ON_SURFACE,
   inversePrimary: '#DEE0E6',
-  inverseSecondary: '#95ABE6',
+  inverseSecondary: '#F4845A',
   shadow: '#000000',
   scrim: 'rgba(0, 0, 0, 0.25)',
   backdrop: 'rgba(51, 51, 51, 0.6)',
 
-  // Semantic surface variants (light derives via primary-tint math)
+  // Semantic surface variants
   surfaceContainerHighest: withOpacity(LIGHT_PRIMARY, 0.05),
   surfaceContainerHigh: withOpacity(LIGHT_PRIMARY, 0.03),
   surfaceContainer: withOpacity(LIGHT_PRIMARY, 0.02),
@@ -101,7 +84,7 @@ export const lightColors: TokenColors = {
   // Menu
   menuBackground: LIGHT_SURFACE,
   menuBackgroundDimmed: withOpacity(LIGHT_SURFACE, 0.9),
-  menuBackgroundActive: withOpacity(LIGHT_PRIMARY, 0.08),
+  menuBackgroundActive: withOpacity(LIGHT_SECONDARY, 0.08),
   menuSeparator: withOpacity(LIGHT_PRIMARY, 0.5),
   menuGroupSeparator: withOpacity('#000000', 0.08),
   menuText: LIGHT_ON_SURFACE,
@@ -113,48 +96,46 @@ export const lightColors: TokenColors = {
   sentMessageDocumentIcon: LIGHT_ON_SURFACE,
   userAvatarImageBackground: 'transparent',
   userAvatarNameColors: [
-    LIGHT_PRIMARY,
     LIGHT_SECONDARY,
     LIGHT_TERTIARY,
+    LIGHT_PRIMARY,
     LIGHT_ERROR,
   ],
   searchBarBackground: 'rgba(118, 118, 128, 0.12)',
 
   // Thinking bubble
-  thinkingBubbleBackground: '#f0f5fa',
-  thinkingBubbleText: '#0a5999',
-  thinkingBubbleBorder: 'rgba(10, 89, 153, 0.4)',
-  thinkingBubbleShadow: '#0a5999',
-  thinkingBubbleChevronBackground: 'rgba(10, 89, 153, 0.1)',
-  thinkingBubbleChevronBorder: 'rgba(10, 89, 153, 0.2)',
+  thinkingBubbleBackground: '#f0faf8',
+  thinkingBubbleText: '#0A7E6E',
+  thinkingBubbleBorder: 'rgba(10, 126, 110, 0.4)',
+  thinkingBubbleShadow: '#0A7E6E',
+  thinkingBubbleChevronBackground: 'rgba(10, 126, 110, 0.1)',
+  thinkingBubbleChevronBorder: 'rgba(10, 126, 110, 0.2)',
 
   // Status bar
   bgStatusActive: '#22c55e',
   bgStatusIdle: '#d1d5db',
 
-  // Buttons
-  btnPrimaryBg: '#eff6ff',
-  btnPrimaryBorder: '#bfdbff',
-  btnPrimaryText: '#1447e6',
+  // Buttons — orange GenerationDeclic
+  btnPrimaryBg: '#FEF0EB',
+  btnPrimaryBorder: '#F4C4AD',
+  btnPrimaryText: '#E8500A',
   btnReadyBg: '#ecfdf5',
   btnReadyBorder: '#bbf7d0',
   btnReadyText: '#047857',
-  btnDownloadBg: '#ecfdf5',
-  btnDownloadBorder: '#bbf7d0',
-  btnDownloadText: '#047857',
+  btnDownloadBg: '#EDFAF7',
+  btnDownloadBorder: '#A8DDD7',
+  btnDownloadText: '#0A7E6E',
 
   // Icons
-  iconModelTypeText: '#3b82f6',
-  iconModelTypeVision: '#9810fa',
+  iconModelTypeText: '#E8500A',
+  iconModelTypeVision: '#0A7E6E',
   iconModelTypeAudio: '#f97316',
 };
 
-// Dark base values from canonical Figma. Where the canonical dark binding
-// differs visibly from the current dark Theme value, the current value
-// wins to avoid visual regression (tracked as a designer follow-up).
+// Dark base values
 const DARK_PRIMARY = '#DADDE6';
-const DARK_SECONDARY = '#95ABE6';
-const DARK_TERTIARY = '#80E6E4';
+const DARK_SECONDARY = '#F4845A';       // orange clair pour fond sombre
+const DARK_TERTIARY = '#4DBFB3';        // teal clair pour fond sombre
 const DARK_ERROR = '#FF653F';
 const DARK_BACKGROUND = '#000000';
 const DARK_ON_BACKGROUND = '#ffffff';
@@ -163,15 +144,15 @@ const DARK_ON_SURFACE = '#E2E2E2';
 const DARK_INVERSE_ON_SURFACE = '#333333';
 
 export const darkColors: TokenColors = {
-  // MD3 base palette (dark) — verbatim from canonical Figma
+  // MD3 base palette (dark)
   primary: DARK_PRIMARY,
   onPrimary: '#44464C',
   primaryContainer: '#5B5E66',
   onPrimaryContainer: '#DEE0E6',
   secondary: DARK_SECONDARY,
-  onSecondary: '#11214C',
-  secondaryContainer: '#424242',
-  onSecondaryContainer: '#E0E0E0',
+  onSecondary: '#4C1E04',
+  secondaryContainer: '#7A2E08',
+  onSecondaryContainer: '#FDE8DF',
   tertiary: DARK_TERTIARY,
   onTertiary: '#014C4C',
   tertiaryContainer: '#016665',
@@ -194,13 +175,12 @@ export const darkColors: TokenColors = {
   inverseSurface: '#e5e5e6',
   inverseOnSurface: DARK_INVERSE_ON_SURFACE,
   inversePrimary: '#5B5E66',
-  inverseSecondary: LIGHT_SECONDARY, // md3BaseColors.secondary used in current code
+  inverseSecondary: LIGHT_SECONDARY,
   shadow: '#ffffff',
   scrim: 'rgba(0, 0, 0, 0.25)',
   backdrop: 'rgba(66, 66, 66, 0.8)',
 
-  // Semantic surface variants (dark derives via surface-tint math)
-  // Explicit binding pending in a later design-system phase.
+  // Semantic surface variants
   surfaceContainerHighest: withOpacity(DARK_SURFACE, 0.22),
   surfaceContainerHigh: withOpacity(DARK_SURFACE, 0.16),
   surfaceContainer: withOpacity(DARK_SURFACE, 0.12),
@@ -229,7 +209,7 @@ export const darkColors: TokenColors = {
   // Menu
   menuBackground: '#2a2a2a',
   menuBackgroundDimmed: withOpacity(DARK_SURFACE, 0.9),
-  menuBackgroundActive: withOpacity(DARK_PRIMARY, 0.08),
+  menuBackgroundActive: withOpacity(DARK_SECONDARY, 0.08),
   menuSeparator: withOpacity(DARK_PRIMARY, 0.5),
   menuGroupSeparator: withOpacity('#FFFFFF', 0.08),
   menuText: DARK_ON_SURFACE,
@@ -241,38 +221,38 @@ export const darkColors: TokenColors = {
   sentMessageDocumentIcon: DARK_ON_SURFACE,
   userAvatarImageBackground: 'transparent',
   userAvatarNameColors: [
-    DARK_PRIMARY,
     DARK_SECONDARY,
     DARK_TERTIARY,
+    DARK_PRIMARY,
     DARK_ERROR,
   ],
   searchBarBackground: 'rgba(28, 28, 30, 0.92)',
 
-  // Thinking bubble
-  thinkingBubbleBackground: '#142e4d',
-  thinkingBubbleText: '#6abaff',
-  thinkingBubbleBorder: 'rgba(74, 140, 199, 0.6)',
-  thinkingBubbleShadow: '#4a9fff',
-  thinkingBubbleChevronBackground: 'rgba(74, 140, 199, 0.15)',
-  thinkingBubbleChevronBorder: 'rgba(74, 140, 199, 0.3)',
+  // Thinking bubble — teal GenerationDeclic
+  thinkingBubbleBackground: '#0A1E1C',
+  thinkingBubbleText: '#4DBFB3',
+  thinkingBubbleBorder: 'rgba(77, 191, 179, 0.6)',
+  thinkingBubbleShadow: '#4DBFB3',
+  thinkingBubbleChevronBackground: 'rgba(77, 191, 179, 0.15)',
+  thinkingBubbleChevronBorder: 'rgba(77, 191, 179, 0.3)',
 
   // Status bar
   bgStatusActive: '#22c55e',
   bgStatusIdle: '#4b5563',
 
-  // Buttons
-  btnPrimaryBg: '#0f1629',
-  btnPrimaryBorder: '#192645',
-  btnPrimaryText: '#93c5fd',
+  // Buttons — orange GenerationDeclic sombre
+  btnPrimaryBg: '#2A1208',
+  btnPrimaryBorder: '#7A2E08',
+  btnPrimaryText: '#F4845A',
   btnReadyBg: '#052e16',
   btnReadyBorder: '#166534',
   btnReadyText: '#6ee7b7',
-  btnDownloadBg: '#0a1f17',
-  btnDownloadBorder: '#143d2d',
-  btnDownloadText: '#34d399',
+  btnDownloadBg: '#071A18',
+  btnDownloadBorder: '#0A4A43',
+  btnDownloadText: '#4DBFB3',
 
   // Icons
-  iconModelTypeText: '#93c5fd',
-  iconModelTypeVision: '#c4b5fd',
+  iconModelTypeText: '#F4845A',
+  iconModelTypeVision: '#4DBFB3',
   iconModelTypeAudio: '#fdba74',
 };
