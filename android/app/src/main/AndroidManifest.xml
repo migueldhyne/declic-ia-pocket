@@ -1,28 +1,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Allow app to check if any other app can handle URLs -->
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="declicia" android:host="hub" />
         </intent>
     </queries>
-
-    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <!-- Needed only for devices running Android 9 (API 28) or lower -->
-    <!-- Currently used for storing chat sessions (/Download) -->
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
-
     <application
-      android:name=".MainApplication"
+      android:name="com.pocketpalai.MainApplication"
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
@@ -33,7 +25,7 @@
       android:theme="@style/AppTheme"
       android:supportsRtl="true">
       <activity
-        android:name=".MainActivity"
+        android:name="com.pocketpalai.MainActivity"
         android:label="@string/app_name"
         android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|density"
         android:launchMode="singleTask"
@@ -43,25 +35,18 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
-        <!-- Host-scoped deep link for the Hugging Face "Use this model" flow.
-             Scoped to host=hub so this is not a bare-scheme handler. -->
         <intent-filter>
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="pocketpal" android:host="hub" />
+            <data android:scheme="declicia" android:host="hub" />
         </intent-filter>
       </activity>
-
-        <!-- Optional native library for OpenCL (GPU acceleration) -->
         <uses-native-library
             android:name="libOpenCL.so"
             android:required="false" />
-
-        <!-- Optional native library for Hexagon DSP (NPU acceleration) -->
         <uses-native-library
             android:name="libcdsprpc.so"
             android:required="false" />
     </application>
-
 </manifest>
