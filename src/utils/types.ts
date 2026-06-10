@@ -485,6 +485,8 @@ export interface Model {
   repo?: string; // Repository name (e.g., "gemma-2-2b-it-GGUF")
   name: string;
   type?: string;
+  country?: string; // Emoji drapeau ex: '🇫🇷'
+  minRamGB?: number; // RAM minimale recommandée en GB
   capabilities?: SkillKey[]; // Array of capability keys
   size: number; // Size in bytes
   params: number;
