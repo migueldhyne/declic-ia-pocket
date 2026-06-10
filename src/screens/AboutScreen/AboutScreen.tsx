@@ -109,7 +109,7 @@ export const AboutScreen: React.FC = () => {
           <View style={styles.header}>
             <View style={styles.headerContent}>
               <Text variant="titleLarge" style={styles.title}>
-                PocketPal AI
+                Déclic IA
               </Text>
               <Text variant="bodyMedium" style={styles.description}>
                 {l10n.about.description}
@@ -143,7 +143,7 @@ export const AboutScreen: React.FC = () => {
             <Button
               mode="outlined"
               onPress={() =>
-                Linking.openURL('https://github.com/a-ghorbani/pocketpal-ai')
+                Linking.openURL('https://github.com/migueldhyne/declic-ia-pocket')
               }
               style={styles.actionButton}
               icon={GithubButtonIcon}>
@@ -155,7 +155,7 @@ export const AboutScreen: React.FC = () => {
                 <TouchableOpacity
                   style={styles.supportButton}
                   onPress={() =>
-                    Linking.openURL('https://www.buymeacoffee.com/aghorbani')
+                    Linking.openURL('https://www.generationdeclic.net')
                   }>
                   <HeartIcon stroke={theme.colors.onPrimary} />
                   <Text style={styles.supportButtonText}>
@@ -179,14 +179,14 @@ export const AboutScreen: React.FC = () => {
             <Text
               style={styles.legalLink}
               onPress={() =>
-                Linking.openURL('https://pocketpal.dev/privacy-policy')
+                Linking.openURL('https://www.generationdeclic.net/privacy')
               }>
               {l10n.about.privacyPolicy}
             </Text>
             <Text style={styles.legalSeparator}>·</Text>
             <Text
               style={styles.legalLink}
-              onPress={() => Linking.openURL('https://pocketpal.dev/terms')}>
+              onPress={() => Linking.openURL('https://www.generationdeclic.net/terms')}>
               {l10n.about.termsOfService}
             </Text>
           </View>
