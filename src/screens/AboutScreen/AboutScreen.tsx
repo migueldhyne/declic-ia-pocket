@@ -255,13 +255,11 @@ const handleSubmit = async () => {
               {l10n.common.cancel}
             </Button>
           </View>
-          <Button
-            mode="contained"
-            onPress={handleSubmit}
-            loading={isSubmitting}
-            disabled={isSubmitting}>
-            {l10n.feedback.submit}
-          </Button>
+<Button
+  mode="contained"
+  onPress={handleSubmit}>
+  {l10n.feedback.submit}
+</Button>
         </Sheet.Actions>
       </Sheet>
     </SafeAreaView>
