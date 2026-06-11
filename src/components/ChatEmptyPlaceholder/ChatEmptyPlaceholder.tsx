@@ -55,7 +55,7 @@ export const ChatEmptyPlaceholder = observer(
       <View
         style={[styles.container, {marginBottom: bottomComponentHeight + 100}]}>
         <Image
-          source={require('../../assets/pocketpal-dark-v2.png')}
+          source={require('../../assets/logo_declic-ia_orange-vert.png')}
           style={styles.logo}
           resizeMode="contain"
         />
