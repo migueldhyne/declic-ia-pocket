@@ -31,6 +31,8 @@ import {L10nContext} from '../../utils';
 import {Model, ModelOrigin} from '../../utils/types';
 import {ErrorState} from '../../utils/errors';
 
+import {useDeviceRam} from '../../hooks/useDeviceRam';
+
 export const ModelsScreen: React.FC = observer(() => {
   const l10n = useContext(L10nContext);
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -53,6 +55,8 @@ export const ModelsScreen: React.FC = observer(() => {
     useState(false);
   const [selectedServerId, setSelectedServerId] = useState<string | null>(null);
 
+  const {usableRamGB, isLoading: isRamLoading} = useDeviceRam();
+  
   const theme = useTheme();
   const styles = createStyles(theme);
 
@@ -267,7 +271,17 @@ export const ModelsScreen: React.FC = observer(() => {
   };
 
   const activeModelId = modelStore.activeModel?.id;
-  const models = modelStore.displayModels;
+  
+  // Filtre selon la RAM disponible (marge système déjà déduite dans le hook)
+// Les modèles déjà téléchargés sont toujours affichés
+const allModels = modelStore.displayModels;
+const models = isRamLoading
+  ? allModels
+  : allModels.filter(model =>
+      model.isDownloaded ||
+      !model.minRamGB ||
+      model.minRamGB <= usableRamGB
+    );
 
   // useMemo uses shallow comaprison for dependencies,
   // so we use computed instead for deep comparison
