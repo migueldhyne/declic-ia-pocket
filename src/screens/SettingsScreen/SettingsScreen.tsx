@@ -67,6 +67,9 @@ import {
   getAllowedCacheTypeVOptions,
 } from '../../utils/flashAttnCompatibility';
 
+import {MistralTokenSheet} from '../../components/MistralTokenSheet';
+import {ragStore} from '../../store/RAGStore';
+
 // OpenCL documentation URL (not localized)
 const OPENCL_DOCS_URL =
   'https://github.com/ggml-org/llama.cpp/blob/master/docs/backend/OPENCL.md#model-preparation';
@@ -87,6 +90,7 @@ export const SettingsScreen: React.FC = observer(() => {
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const [showHfTokenDialog, setShowHfTokenDialog] = useState(false);
   const [gpuSupported, setGpuSupported] = useState(false);
+  const [showMistralTokenDialog, setShowMistralTokenDialog] = useState(false);
   const [keyCacheAnchor, setKeyCacheAnchor] = useState<{x: number; y: number}>({
     x: 0,
     y: 0,
@@ -1067,6 +1071,45 @@ export const SettingsScreen: React.FC = observer(() => {
                   />
                 </View>
               </View>
+              <Divider style={styles.divider} />
+
+{/* Clé API Mistral OCR */}
+<View style={styles.switchContainer}>
+  <View style={styles.textContainer}>
+    <Text variant="titleMedium" style={styles.textLabel}>
+      Clé API Mistral (OCR)
+    </Text>
+    <Text variant="labelSmall" style={styles.textDescription}>
+      {ragStore.isApiKeyPresent
+        ? 'Clé configurée. Permet l\'OCR de PDF et photos via wifi.'
+        : 'Configurez une clé pour activer l\'OCR de PDF et photos.'}
+    </Text>
+  </View>
+  <Button
+    mode="outlined"
+    onPress={() => setShowMistralTokenDialog(true)}
+    style={styles.menuButton}>
+    {ragStore.isApiKeyPresent ? 'Modifier' : 'Configurer'}
+  </Button>
+</View>
+
+{/* Activer OCR Mistral */}
+<Divider style={styles.divider} />
+<View style={styles.switchContainer}>
+  <View style={styles.textContainer}>
+    <Text variant="titleMedium" style={styles.textLabel}>
+      Utiliser OCR Mistral
+    </Text>
+    <Text variant="labelSmall" style={styles.textDescription}>
+      Active le traitement OCR via l'API Mistral (📶 wifi requis).
+    </Text>
+  </View>
+  <Switch
+    value={ragStore.useMistralOCR}
+    disabled={!ragStore.isApiKeyPresent}
+    onValueChange={value => ragStore.setUseMistralOCR(value)}
+  />
+</View>
             </Card.Content>
           </Card>
 
@@ -1216,6 +1259,10 @@ export const SettingsScreen: React.FC = observer(() => {
         onDismiss={() => setShowHfTokenDialog(false)}
         onSave={() => setShowHfTokenDialog(false)}
       />
+      <MistralTokenSheet
+  isVisible={showMistralTokenDialog}
+  onDismiss={() => setShowMistralTokenDialog(false)}
+/>
     </SafeAreaView>
   );
 });
