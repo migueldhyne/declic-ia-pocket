@@ -5,9 +5,14 @@ import {
   FlatList,
   StyleSheet,
   Platform,
-  TouchableOpacity,
 } from 'react-native';
-import {Button, Text, Card, IconButton, ActivityIndicator} from 'react-native-paper';
+import {
+  Button,
+  Text,
+  IconButton,
+  ActivityIndicator,
+  SegmentedButtons,
+} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 import {pick, types} from '@react-native-documents/picker';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
@@ -21,18 +26,31 @@ import {
 } from '../../services/rag/DocumentService';
 
 interface RAGDocumentManagerProps {
-  scope: 'global' | 'conversation';
+  /**
+   * Si fourni, le composant affiche un toggle pour choisir la portée
+   * (cette conversation / tous les chats) et liste les deux groupes
+   * de documents séparément.
+   * Si absent (écran "Base documentaire"), seule la portée globale
+   * est utilisée et affichée.
+   */
   conversationId?: string;
 }
 
 export const RAGDocumentManager: React.FC<RAGDocumentManagerProps> = observer(
-  ({scope, conversationId}) => {
+  ({conversationId}) => {
     const theme = useTheme();
     const [isAdding, setIsAdding] = useState(false);
 
-    const documents = ragStore.getDocumentsForContext(conversationId).filter(
-      d => d.scope === scope
+    // Portée sélectionnée pour le prochain ajout de document.
+    const [scope, setScope] = useState<'conversation' | 'global'>(
+      conversationId ? 'conversation' : 'global',
     );
+
+    const allDocs = ragStore.getDocumentsForContext(conversationId);
+    const conversationDocs = conversationId
+      ? allDocs.filter(d => d.scope === 'conversation' && d.conversationId === conversationId)
+      : [];
+    const globalDocs = allDocs.filter(d => d.scope === 'global');
 
     const handleAddFile = async () => {
       try {
@@ -132,10 +150,13 @@ export const RAGDocumentManager: React.FC<RAGDocumentManagerProps> = observer(
         return;
       }
 
-      // Notifier l'utilisateur que l'OCR utilise le wifi
+      const scopeLabel = scope === 'global'
+        ? 'partagé avec toutes vos conversations'
+        : 'lié à cette conversation uniquement';
+
       Alert.alert(
         '📶 Traitement en ligne',
-        `Le fichier "${fileName}" va être envoyé à l'API Mistral OCR via wifi pour extraction du texte. Il sera ensuite stocké localement.`,
+        `Le fichier "${fileName}" va être envoyé à l'API Mistral OCR via wifi pour extraction du texte, puis stocké localement (${scopeLabel}).`,
         [
           {text: 'Annuler', style: 'cancel'},
           {
@@ -203,6 +224,29 @@ export const RAGDocumentManager: React.FC<RAGDocumentManagerProps> = observer(
 
     return (
       <View style={styles.container}>
+        {/* Toggle de portée — uniquement si on est dans une conversation */}
+        {conversationId && (
+          <View>
+            <Text style={[styles.scopeLabel, {color: theme.colors.onSurface}]}>
+              Pour les nouveaux documents :
+            </Text>
+            <SegmentedButtons
+              value={scope}
+              onValueChange={value => setScope(value as 'conversation' | 'global')}
+              buttons={[
+                {value: 'conversation', label: '📌 Cette conversation'},
+                {value: 'global', label: '🌐 Tous mes chats'},
+              ]}
+              style={styles.segmented}
+            />
+            <Text style={[styles.scopeHint, {color: theme.colors.onSurfaceVariant}]}>
+              {scope === 'global'
+                ? 'Le document sera disponible dans toutes vos conversations.'
+                : 'Le document sera disponible uniquement dans cette conversation.'}
+            </Text>
+          </View>
+        )}
+
         {/* Boutons d'ajout */}
         <View style={styles.addButtons}>
           <Button
@@ -246,19 +290,46 @@ export const RAGDocumentManager: React.FC<RAGDocumentManagerProps> = observer(
           📄 PDF / 🖼️ Photos : OCR via Mistral (📶 wifi requis)
         </Text>
 
-        {/* Liste des documents */}
-        {documents.length === 0 ? (
-          <Text style={[styles.empty, {color: theme.colors.onSurfaceVariant}]}>
-            Aucun document ajouté. L'IA pourra consulter vos documents pour répondre.
-          </Text>
-        ) : (
-          <FlatList
-            data={documents}
-            keyExtractor={d => d.id}
-            renderItem={renderDoc}
-            scrollEnabled={false}
-          />
+        {/* Section : documents de cette conversation */}
+        {conversationId && (
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, {color: theme.colors.onSurface}]}>
+              📌 Cette conversation
+            </Text>
+            {conversationDocs.length === 0 ? (
+              <Text style={[styles.empty, {color: theme.colors.onSurfaceVariant}]}>
+                Aucun document lié à cette conversation.
+              </Text>
+            ) : (
+              <FlatList
+                data={conversationDocs}
+                keyExtractor={d => d.id}
+                renderItem={renderDoc}
+                scrollEnabled={false}
+              />
+            )}
+          </View>
         )}
+
+        {/* Section : documents partagés globalement */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, {color: theme.colors.onSurface}]}>
+            🌐 {conversationId ? 'Partagés (tous les chats)' : 'Base documentaire'}
+          </Text>
+          {globalDocs.length === 0 ? (
+            <Text style={[styles.empty, {color: theme.colors.onSurfaceVariant}]}>
+              Aucun document partagé. L'IA pourra consulter ces documents
+              dans toutes vos conversations.
+            </Text>
+          ) : (
+            <FlatList
+              data={globalDocs}
+              keyExtractor={d => d.id}
+              renderItem={renderDoc}
+              scrollEnabled={false}
+            />
+          )}
+        </View>
       </View>
     );
   },
@@ -266,11 +337,16 @@ export const RAGDocumentManager: React.FC<RAGDocumentManagerProps> = observer(
 
 const styles = StyleSheet.create({
   container: {gap: 12},
+  scopeLabel: {fontSize: 13, fontWeight: '600', marginBottom: 4},
+  segmented: {marginBottom: 4},
+  scopeHint: {fontSize: 12, fontStyle: 'italic', marginBottom: 8},
   addButtons: {flexDirection: 'row', flexWrap: 'wrap', gap: 8},
   addButton: {flex: 1, minWidth: 100},
   loadingRow: {flexDirection: 'row', alignItems: 'center', marginTop: 4},
   note: {fontSize: 12, fontStyle: 'italic'},
-  empty: {fontSize: 13, fontStyle: 'italic', textAlign: 'center', marginTop: 8},
+  section: {gap: 6, marginTop: 4},
+  sectionTitle: {fontSize: 14, fontWeight: '700'},
+  empty: {fontSize: 13, fontStyle: 'italic', textAlign: 'center', marginTop: 4},
   docItem: {
     flexDirection: 'row',
     alignItems: 'center',
