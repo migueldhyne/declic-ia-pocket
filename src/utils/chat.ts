@@ -362,7 +362,7 @@ export const chatTemplates: Record<string, ChatTemplateConfig> = {
     name: 'qwen25',
     addGenerationPrompt: true,
     systemPrompt:
-      'You are Qwen, created by Alibaba Cloud. Tu es Déclic IA, un assistant conversationnel créé par GenerationDeclic.net. Tu réponds en français.',
+  'Tu es Déclic IA, un assistant conversationnel créé par GenerationDeclic.net. Tu réponds en français.',
   },
   smolLM: {
     name: 'smolLM',
