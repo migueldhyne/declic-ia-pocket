@@ -40,20 +40,12 @@ import {
   SettingsScreen,
   BenchmarkScreen,
   AboutScreen,
+  RAGLibraryScreen,
 
   // Dev tools screen. Only available in debug mode.
   DevToolsScreen,
 } from './src/screens';
 import PalsScreen from './src/screens/PalsScreen';
-
-import {RAGLibraryScreen} from '../screens/RAGLibraryScreen/RAGLibraryScreen';
-
-// Dans le Drawer.Navigator, à côté des autres <Drawer.Screen> :
-<Drawer.Screen
-  name={ROUTES.RAG_LIBRARY}
-  component={RAGLibraryScreen}
-  options={{title: 'Base documentaire'}}
-/>
 
 // Check if app is in debug mode
 const isDebugMode = __DEV__;
@@ -133,6 +125,14 @@ const App = observer(() => {
                           headerRight: () => <ModelsHeaderRight />,
                           headerStyle: styles.headerWithoutDivider,
                           title: currentL10n.screenTitles.models,
+                        }}
+                      />
+                      <Drawer.Screen
+                        name={ROUTES.RAG_LIBRARY}
+                        component={gestureHandlerRootHOC(RAGLibraryScreen)}
+                        options={{
+                          headerStyle: styles.headerWithoutDivider,
+                          title: 'Base documentaire',
                         }}
                       />
                       <Drawer.Screen
