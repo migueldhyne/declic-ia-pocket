@@ -13,6 +13,36 @@ import {
   Model,
 } from './types';
 
+import {ragStore} from '../store/RAGStore';
+
+/**
+ * Construit le prompt système enrichi avec les documents RAG.
+ */
+export function buildRAGSystemPrompt(
+  baseSystemPrompt: string,
+  userQuery: string,
+  conversationId?: string,
+): string {
+  const chunks = ragStore.retrieveRelevantChunks(userQuery, conversationId, 5);
+
+  if (chunks.length === 0) {
+    return baseSystemPrompt;
+  }
+
+  const context = chunks
+    .map((chunk, i) => `[Document ${i + 1}]\n${chunk}`)
+    .join('\n\n');
+
+  return `${baseSystemPrompt}
+
+--- DOCUMENTS DE RÉFÉRENCE ---
+Tu disposes des extraits de documents suivants pour répondre à la question.
+Utilise-les si pertinents, sinon réponds normalement.
+
+${context}
+--- FIN DES DOCUMENTS ---`;
+}
+
 export const userId = 'y9d7f8pgn';
 export const assistantId = 'h3o3lc5xj';
 export const user = {id: userId};
