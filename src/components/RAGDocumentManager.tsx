@@ -17,13 +17,13 @@ import {observer} from 'mobx-react-lite';
 import {pick, types} from '@react-native-documents/picker';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 
-import {useTheme} from '../../hooks';
-import {ragStore, RAGDocument} from '../../store/RAGStore';
+import {useTheme} from '../hooks';
+import {ragStore, RAGDocument} from '../store/RAGStore';
 import {
   processTextFile,
   processWithOCR,
   isWifiAvailable,
-} from '../../services/DocumentService';
+} from '../services/DocumentService';
 
 interface RAGDocumentManagerProps {
   /**
