@@ -46,6 +46,15 @@ import {
 } from './src/screens';
 import PalsScreen from './src/screens/PalsScreen';
 
+import {RAGLibraryScreen} from '../screens/RAGLibraryScreen/RAGLibraryScreen';
+
+// Dans le Drawer.Navigator, à côté des autres <Drawer.Screen> :
+<Drawer.Screen
+  name={ROUTES.RAG_LIBRARY}
+  component={RAGLibraryScreen}
+  options={{title: 'Base documentaire'}}
+/>
+
 // Check if app is in debug mode
 const isDebugMode = __DEV__;
 
