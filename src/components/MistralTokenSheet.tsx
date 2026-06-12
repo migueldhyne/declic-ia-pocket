@@ -3,10 +3,11 @@ import {View, Alert, StyleSheet} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 import {observer} from 'mobx-react-lite';
 
-import {Sheet, TextInput} from '../index';
-import {useTheme} from '../../hooks';
-import {ragStore} from '../../store/RAGStore';
-import {L10nContext} from '../../utils';
+import {Sheet} from './Sheet';
+import {TextInput} from './TextInput';
+import {useTheme} from '../hooks';
+import {ragStore} from '../store/RAGStore';
+import {L10nContext} from '../utils';
 
 interface MistralTokenSheetProps {
   isVisible: boolean;
