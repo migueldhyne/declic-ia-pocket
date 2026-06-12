@@ -23,7 +23,7 @@ import {
   processTextFile,
   processWithOCR,
   isWifiAvailable,
-} from '../../services/rag/DocumentService';
+} from '../../services/DocumentService';
 
 interface RAGDocumentManagerProps {
   /**
