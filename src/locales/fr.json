@@ -77,10 +77,37 @@
     "setTokenDescription": "Configurez un token pour accéder aux modèles restreints de Hugging Face.",
     "setTokenButton": "Configurer le token",
     "useHfTokenLabel": "Utiliser le token HF",
-    "useHfTokenDescription": "Activez pour utiliser le token pour les requêtes API. Désactivez si le token cause des problèmes d'authentification."
+    "useHfTokenDescription": "Activez pour utiliser le token pour les requêtes API. Désactivez si le token cause des problèmes d'authentification.",
+    "deviceSelection": "Sélection du périphérique",
+    "deviceSelectionAndroidDescription": "Sélectionnez le périphérique de calcul (CPU, GPU ou NPU Hexagon)",
+    "imageMaxTokens": "Nombre maximal de jetons pour l'image",
+    "imageMaxTokensDescription": "Nombre maximal de jetons pour le traitement d'image : {{tokens}}{{effectiveTokens}} (plus bas = plus rapide, moins de détails)",
+    "flashAttentionAndroidDescription": "Doit être désactivé pour la sauvegarde/restauration d'état OpenCL",
+    "memorySettings": "Paramètres mémoire",
+    "useMlock": "Verrouillage mémoire (Memory Lock)",
+    "useMlockDescription": "Force le système à garder le modèle en RAM plutôt que de le compresser ou de l'échanger sur le disque",
+    "useMmap": "Mappage mémoire (Memory Mapping)",
+    "useMmapDescription": "Utilise des fichiers mappés en mémoire pour un chargement plus rapide du modèle",
+    "weightRepacking": "Réorganisation des poids (Weight Repacking)",
+    "weightRepackingDescription": "Traitement des requêtes plus rapide avec un surcoût mémoire minimal lorsque le mappage mémoire est désactivé. La génération de jetons n'est pas affectée."
   },
   "memory": {
-    "shortWarning": "Alerte mémoire"
+    "shortWarning": "Alerte mémoire",
+    "multimodalWarning": "Cet appareil pourrait ne pas avoir assez de ressources pour les modèles multimodaux.",
+    "memoryTight": "Mémoire limitée",
+    "lowMemory": "Mémoire faible",
+    "memoryDetailMessage": "Ce modèle nécessite environ {{needed}} mais seulement environ {{available}} sont estimés disponibles. Les estimations s'améliorent avec l'utilisation de l'application.",
+    "estimatedMemory": "Mémoire estimée : ~{{size}}",
+    "alerts": {
+      "memoryWarningTitle": "Alerte mémoire",
+      "memoryWarningMessage": "Ce modèle pourrait dépasser la mémoire disponible, ce qui pourrait causer des instabilités. Continuer le chargement ?",
+      "multimodalWarningTitle": "Avertissement de performance",
+      "multimodalWarningMessage": "Cet appareil pourrait ne pas avoir assez de ressources pour les modèles multimodaux. Le chargement pourrait causer des instabilités. Continuer quand même ?",
+      "combinedWarningTitle": "Avertissement de performance",
+      "combinedWarningMessage": "Ce modèle pourrait dépasser la mémoire disponible et cet appareil pourrait ne pas avoir assez de ressources pour les modèles multimodaux. Le chargement pourrait causer des instabilités. Continuer quand même ?",
+      "cancel": "Annuler",
+      "continue": "Continuer"
+    }
   },
   "storage": {
     "checkFailed": "Échec de vérification du stockage",
@@ -185,7 +212,16 @@
         "offload": "Décharger"
       },
       "labels": {
-        "skills": "Compétences : "
+        "skills": "Compétences : ",
+        "vision": "Vision",
+        "capabilities": "capacités.",
+        "modelName": "Nom du modèle",
+        "contextLength": "Longueur du contexte",
+        "architecture": "Architecture",
+        "author": "Auteur",
+        "requiresProjectionModel": "Nécessite un modèle de projection",
+        "downloadProjectionModel": "Télécharger le modèle de projection",
+        "viewModelCardOnHuggingFace": "Voir la fiche du modèle sur Hugging Face"
       }
     },
     "modelSettings": {
@@ -750,5 +786,48 @@
     "networkError": "Erreur réseau : Impossible de se connecter à l'API",
     "downloadSetupFailedTitle": "Échec de configuration du téléchargement",
     "downloadSetupFailedMessage": "Échec de préparation du modèle pour le téléchargement : {{message}}"
+  },
+  "voiceAndSpeech": {
+    "sectionTitle": "Voix et synthèse vocale",
+    "voiceRowTitle": "Voix",
+    "notSet": "Non définie",
+    "previewButton": "Aperçu",
+    "stopPreviewButton": "Arrêter l'aperçu",
+    "voicesTitle": "Voix",
+    "voicesEmptyHint": "Touchez une voix pour l'installer et l'utiliser. Ou choisissez une voix système — celles-ci sont toujours disponibles.",
+    "supertonicStepsLabel": "Qualité (étapes de diffusion)",
+    "toggleAutoSpeakLabel": "Activer/désactiver la lecture automatique",
+    "openSettingsLabel": "Paramètres de synthèse vocale",
+    "playMessageLabel": "Lire le message",
+    "stopMessageLabel": "Arrêter le message",
+    "autoSpeakLabel": "Lire les réponses automatiquement",
+    "autoSpeakDescription": "Lit les nouvelles réponses à voix haute dès leur arrivée.",
+    "engineChipKitten": "Kitten",
+    "engineChipKokoro": "Kokoro",
+    "engineChipSupertonic": "Supertonic",
+    "engineChipSystem": "Système",
+    "stepsCount": "{{steps}} étapes",
+    "engineKittenTagline": "Empreinte la plus légère. Fiable. Idéal sur les anciens appareils.",
+    "engineKokoroTagline": "Meilleure qualité. Démarrage plus lent. Certaines voix peuvent ne pas fonctionner sur tous les appareils.",
+    "engineSupertonicTagline": "Démarrage le plus rapide. Utilise plus de RAM. Peut occasionnellement sauter des mots.",
+    "engineSystemTagline": "Voix intégrées au système. Toujours disponibles, aucune installation nécessaire.",
+    "engineSystemTitleIos": "Voix iOS",
+    "engineSystemTitleAndroid": "Voix Android",
+    "engineSystemTier": "toujours disponible",
+    "engineTierLightest": "la plus légère",
+    "engineTierBestQuality": "meilleure qualité",
+    "engineTierFastestStart": "démarrage le plus rapide",
+    "engineSpecsLine": "{{voices}} voix  ·  {{sizeMb}} Mo  ·  ~{{ramMb}} Mo de RAM",
+    "engineSystemSpecsLine": "{{voices}} voix",
+    "engineRemoveTitle": "Supprimer {{engineTitle}} ?",
+    "engineRemoveBody": "Libère ~{{sizeMb}} Mo sur cet appareil.",
+    "engineRemoveCancel": "Annuler",
+    "engineRemoveConfirm": "Supprimer",
+    "engineInstallCta": "Installer · {{sizeMb}} Mo",
+    "engineDownloadingLabel": "Téléchargement…  {{pct}}%  ·  {{mbDone}} / {{sizeMb}} Mo",
+    "engineRetryCta": "Réessayer",
+    "voicesEmptyState": "Aucune voix trouvée.",
+    "kokoroDeviceNote": "Certaines voix peuvent ne pas fonctionner sur tous les appareils.",
+    "insufficientStorage": "Espace insuffisant — libérez {{requiredMb}} Mo pour installer ce moteur ({{freeMb}} Mo disponibles)."
   }
 }
