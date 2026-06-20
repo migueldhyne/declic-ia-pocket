@@ -3,7 +3,7 @@ import {chatTemplates} from '../utils/chat';
 import {defaultCompletionParams} from '../utils/completionSettingsVersions';
 import {Platform} from 'react-native';
 
-export const MODEL_LIST_VERSION = 17;
+export const MODEL_LIST_VERSION = 18;
 
 const iosOnlyModels: Model[] = [];
 const androidOnlyModels: Model[] = [];
@@ -224,7 +224,7 @@ const crossPlatformModels: Model[] = [
     name: 'Mistral 7B Instruct v0.3 (Q4_K_M)',
     type: 'Mistral',
     country: '🇫🇷',
-    minRamGB: 5,
+    minRamGB: 8,
     capabilities: ['instructions', 'summarization', 'reasoning', 'multilingual', 'rewriting'],
     size: 4370000000,
     params: 7242000000,
@@ -245,6 +245,38 @@ const crossPlatformModels: Model[] = [
       rfilename: 'Mistral-7B-Instruct-v0.3-Q4_K_M.gguf',
       url: 'https://huggingface.co/bartowski/Mistral-7B-Instruct-v0.3-GGUF/resolve/main/Mistral-7B-Instruct-v0.3-Q4_K_M.gguf',
       size: 4370000000,
+      canFitInStorage: true,
+    },
+  },
+
+  {
+    id: 'bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF/mistralai_Ministral-3-8B-Instruct-2512-Q4_K_M.gguf',
+    author: 'bartowski',
+    repo: 'mistralai_Ministral-3-8B-Instruct-2512-GGUF',
+    name: 'Ministral 3 8B Instruct (Q4_K_M)',
+    type: 'Mistral',
+    country: '🇫🇷',
+    minRamGB: 8,
+    capabilities: ['instructions', 'summarization', 'reasoning', 'multilingual', 'rewriting'],
+    size: 4920000000,
+    params: 8000000000,
+    isDownloaded: false,
+    downloadUrl: 'https://huggingface.co/bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF/resolve/main/mistralai_Ministral-3-8B-Instruct-2512-Q4_K_M.gguf',
+    hfUrl: 'https://huggingface.co/bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF',
+    progress: 0,
+    filename: 'mistralai_Ministral-3-8B-Instruct-2512-Q4_K_M.gguf',
+    isLocal: false,
+    origin: ModelOrigin.PRESET,
+    defaultChatTemplate: {...chatTemplates.default},
+    chatTemplate: chatTemplates.default,
+    defaultCompletionSettings: {...defaultCompletionParams, n_predict: 1000, temperature: 0.7},
+    completionSettings: {...defaultCompletionParams, n_predict: 1000, temperature: 0.7},
+    defaultStopWords: ['</s>', '[INST]', '[/INST]'],
+    stopWords: ['</s>', '[INST]', '[/INST]'],
+    hfModelFile: {
+      rfilename: 'mistralai_Ministral-3-8B-Instruct-2512-Q4_K_M.gguf',
+      url: 'https://huggingface.co/bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF/resolve/main/mistralai_Ministral-3-8B-Instruct-2512-Q4_K_M.gguf',
+      size: 4920000000,
       canFitInStorage: true,
     },
   },
